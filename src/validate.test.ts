@@ -26,6 +26,19 @@ test('fails when not including ticket in pull request title', () => {
   )
 })
 
+test('fails when string is not long enough', () => {
+  const input: ValidationConfig = {
+    value: 'failing',
+    patterns: ['.{20,}'],
+    errorMessage: 'Not long enough'
+  }
+
+  const errors = validate([input])
+  expect(errors).toHaveLength(1)
+  expect(errors[0].value).toEqual('failing')
+  expect(errors[0].message).toEqual('Not long enough')
+})
+
 test('passes a proper git-flow branch name', () => {
   const input: ValidationConfig = {
     value: 'feature/test-branch',
