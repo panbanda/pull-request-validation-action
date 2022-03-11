@@ -20,7 +20,7 @@ export const validate = (config: ValidationConfig[]): ValidationError[] => {
 
     if (!passing) {
       const matchError = `"${value}" does not match any of the patterns.`
-      core.info(matchError)
+      console.log(matchError)
 
       errors.push({
         value,
@@ -35,7 +35,7 @@ export const validate = (config: ValidationConfig[]): ValidationError[] => {
 export async function run(): Promise<void> {
   try {
     const config: ValidationConfig[] = JSON.parse(core.getInput('validations'))
-    core.info(`Starting validation of ${config.length} entries...`)
+    console.log(`Starting validation of ${config.length} entries...`)
 
     const errors = validate(config)
     if (errors.length > 0) {
@@ -44,12 +44,15 @@ export async function run(): Promise<void> {
       )
     }
 
-    core.setOutput('success', errors.length === 0)
+    const success = errors.length === 0
+    const errorMessage = errors.map(({message}) => `- ${message}`).join('\n')
+
+    const output = {success, errors, errorMessage}
+    console.log(output)
+
+    core.setOutput('success', success)
     core.setOutput('errors', errors)
-    core.setOutput(
-      'errorMessage',
-      errors.map(({message}) => `- ${message}`).join('\n')
-    )
+    core.setOutput('errorMessage', errorMessage)
   } catch (err) {
     if (err instanceof Error) core.setFailed(err.message)
   }
