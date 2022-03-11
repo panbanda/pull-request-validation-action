@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: panbanda/string-validation-action@main
         with:
-          config: |
+          validations: |
             [
               {
                 value: "${{ pr_title_variable }}",
