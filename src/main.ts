@@ -44,7 +44,7 @@ export async function run(): Promise<void> {
       )
     }
 
-    core.setOutput('success', !!errors.length)
+    core.setOutput('success', errors.length === 0)
     core.setOutput('errors', errors)
     core.setOutput(
       'errorMessage',
