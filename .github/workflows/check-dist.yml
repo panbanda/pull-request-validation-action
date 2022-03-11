@@ -1,9 +1,4 @@
-# `dist/index.js` is a special file in Actions.
-# When you reference an action with `uses:` in a workflow,
-# `index.js` is the code that will run.
-# For our project, we generate this file through a build process from other source files.
-# We need to make sure the checked-in `index.js` actually matches what we expect it to be.
-name: Check dist/
+name: Check Distribution
 
 on:
   push:
@@ -23,18 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set Node.js 16.x
-        uses: actions/setup-node@v2.5.1
+      - uses: actions/setup-node@v2.5.1
         with:
           node-version: 16.x
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Dependencies
+        run: yarn install
 
       - name: Rebuild the dist/ directory
         run: |
-          npm run build
-          npm run package
+          yarn build
+          yarn package
 
       - name: Compare the expected and actual dist/ directories
         run: |

@@ -19,11 +19,12 @@ export const validate = (config: ValidationConfig[]): ValidationError[] => {
     const passing = patterns.some(pattern => new RegExp(pattern).test(value))
 
     if (!passing) {
-      core.info(`"${value}" does not match any of the patterns.`)
+      const matchError = `"${value}" does not match any of the patterns.`;
+      core.info(matchError)
 
       errors.push({
         value,
-        message: errorMessage
+        message: errorMessage || matchError
       })
     }
   }
