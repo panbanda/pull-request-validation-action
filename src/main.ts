@@ -1,27 +1,50 @@
 import * as core from '@actions/core'
 
 export interface ValidationConfig {
-  patterns?: string[]
+  value: string
+  patterns: string[]
   errorMessage?: string
 }
 
-export interface InputConfig {
-  title?: ValidationConfig[]
+export interface ValidationError {
+  value: string
+  message?: string
+}
+
+export const validate = (config: ValidationConfig[]): ValidationError[] => {
+  const errors: ValidationError[] = []
+  for (const entry of config) {
+    const {value, patterns, errorMessage} = entry
+
+    const passing = patterns.some(pattern => new RegExp(pattern).test(value))
+
+    if (!passing) {
+      core.info(`"${value}" does not match any of the patterns.`)
+
+      errors.push({
+        value,
+        message: errorMessage
+      })
+    }
+  }
+
+  return errors
 }
 
 export async function run(): Promise<void> {
   try {
-    const config: InputConfig = JSON.parse(core.getInput('config'))
-    core.info(`Starting validation of pull request`)
+    const config: ValidationConfig[] = JSON.parse(core.getInput('validations'))
+    core.info(`Starting validation of ${config.length} entries...`)
 
-    console.log(config)
-    // core.info(title)
-    // core.debug(new Date().toTimeString())
-    // await wait(parseInt(ms, 10))
-    // core.debug(new Date().toTimeString())
+    const errors = validate(config)
+    if (errors.length > 0) {
+      core.setFailed(
+        `${errors.length} of the values failed the pattern checks.`
+      )
+    }
 
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    core.setOutput('errors', errors)
+  } catch (err) {
+    if (err instanceof Error) core.setFailed(err.message)
   }
 }

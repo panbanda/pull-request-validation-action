@@ -2,9 +2,9 @@ name: Pull Request Validation
 description: Validate your pull requests with configurable checks
 author: Jonathan Reyes
 inputs:
-  config:
+  validations:
     required: true
-    description: JSON configuration for tests
+    description: An array of configurations to validate
 outputs:
   errors:
     description: Errors if something in the PR validation did not pass
