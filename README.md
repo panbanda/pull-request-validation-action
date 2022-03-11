@@ -2,7 +2,7 @@
 
 Use this action to validate an array of strings with various regex patterns and return error messages.  This action is designed to work with other actions to manipulate a pull request (for example).
 
-```
+```yaml
 on:
   pull_request:
     branches:
