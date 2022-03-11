@@ -6,6 +6,8 @@ inputs:
     required: true
     description: An array of settings
 outputs:
+  success:
+    description: Boolean value to see if the validations passed
   errors:
     description: Errors if something in the PR validation did not pass
   errorMessage:
