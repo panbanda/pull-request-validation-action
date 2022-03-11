@@ -7,7 +7,7 @@ inputs:
     description: An array of settings
 outputs:
   status:
-    description: 'pass' or 'fail' for validations
+    description: (pass|fail) in relation to validations
   errors:
     description: Errors if something in the PR validation did not pass
   errorMessage:
