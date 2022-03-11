@@ -1,8 +1,7 @@
 import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
-import * as core from '@actions/core'
-import {validate, ValidationConfig, ValidationError} from './main'
+import {validate, ValidationConfig} from './main'
 
 test('runs the github action', () => {
   process.env['INPUT_VALIDATIONS'] = JSON.stringify([
