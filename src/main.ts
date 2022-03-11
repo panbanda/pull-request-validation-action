@@ -1,4 +1,11 @@
-import {setOutput, setFailed, getInput, info} from '@actions/core'
+import {
+  setOutput,
+  setFailed,
+  getInput,
+  warning,
+  notice,
+  error
+} from '@actions/core'
 import {validate, ValidationConfig, ValidationError} from './validate'
 
 export async function run(): Promise<void> {
@@ -12,13 +19,13 @@ export async function run(): Promise<void> {
     return
   }
 
-  info(`Starting validation of ${config.length} entries...`)
+  notice(`Starting validation of ${config.length} entries...`)
 
   errors = validate(config)
   const success = errors.length === 0
 
   if (!success) {
-    setFailed(`${errors.length} of the values failed the pattern checks.`)
+    error(`${errors.length} of the values failed the pattern checks.`)
   }
 
   const errorMessage = errors.map(({message}) => `- ${message}`).join('\n')

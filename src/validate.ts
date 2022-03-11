@@ -1,3 +1,5 @@
+import {warning} from '@actions/core'
+
 export interface ValidationConfig {
   value: string
   patterns: string[]
@@ -18,7 +20,7 @@ export const validate = (config: ValidationConfig[]): ValidationError[] => {
 
     if (!passing) {
       const matchError = `"${value}" does not match any of the patterns.`
-      console.log(matchError)
+      warning(matchError)
 
       errors.push({
         value,
