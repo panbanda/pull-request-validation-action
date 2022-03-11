@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "pull-request-validation-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Validate your pull requests with github actions",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -11,18 +11,19 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "yarn build && yarn format && yarn lint && yarn package && yarn test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/panbanda/pull-request-validation-action.git"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "pull request",
+    "validation",
+    "validator"
   ],
-  "author": "",
+  "author": "Jonathan Reyes",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.6.0"

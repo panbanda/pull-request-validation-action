@@ -1,11 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Pull Request Validation
+description: Validate your pull requests with configurable checks
+author: Jonathan Reyes
 inputs:
-  milliseconds: # change this
+  config:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: JSON configuration for tests
+outputs:
+  errors:
+    description: Errors if something in the PR validation did not pass
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: node16
+  main: dist/index.js
