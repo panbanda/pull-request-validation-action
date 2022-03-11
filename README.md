@@ -13,7 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: panbanda/string-validation-action@master
+      - uses: panbanda/string-validation-action@main
         with:
           config: |
             [
