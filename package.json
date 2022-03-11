@@ -1,8 +1,8 @@
 {
-  "name": "pull-request-validation-action",
+  "name": "string-validation-action",
   "version": "0.0.0",
   "private": true,
-  "description": "Validate your pull requests with github actions",
+  "description": "Validate multiple action outputs, environment variables, and strings in a single step",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/panbanda/pull-request-validation-action.git"
+    "url": "git+https://github.com/panbanda/string-validation-action.git"
   },
   "keywords": [
     "actions",

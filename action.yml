@@ -1,10 +1,10 @@
-name: Pull Request Validation
-description: Validate your pull requests with configurable checks
+name: String Validation
+description: Validate multiple action outputs, environment variables, and strings in a single step
 author: Jonathan Reyes
 inputs:
   validations:
     required: true
-    description: An array of configurations to validate
+    description: An array of settings
 outputs:
   errors:
     description: Errors if something in the PR validation did not pass
