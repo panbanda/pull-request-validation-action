@@ -8,6 +8,8 @@ inputs:
 outputs:
   errors:
     description: Errors if something in the PR validation did not pass
+  errorMessage:
+    description: Returns a markdown list of errors
 runs:
   using: node16
   main: dist/index.js

@@ -45,6 +45,10 @@ export async function run(): Promise<void> {
     }
 
     core.setOutput('errors', errors)
+    core.setOutput(
+      'errorMessage',
+      errors.map(({message}) => `- ${message}`).join('\n')
+    )
   } catch (err) {
     if (err instanceof Error) core.setFailed(err.message)
   }
