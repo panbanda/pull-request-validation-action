@@ -6,29 +6,6 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,8 +16,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = exports.validate = void 0;
-const core = __importStar(__nccwpck_require__(186));
+exports.run = void 0;
+const core_1 = __nccwpck_require__(186);
+const validate_1 = __nccwpck_require__(997);
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let config = [];
+        let errors = [];
+        (0, core_1.info)('Loading the validations from the config...');
+        try {
+            config = JSON.parse((0, core_1.getInput)('validations'));
+        }
+        catch (err) {
+            if (err instanceof Error)
+                (0, core_1.setFailed)(err.message);
+            return;
+        }
+        (0, core_1.info)(`Starting validation of ${config.length} entries...`);
+        errors = (0, validate_1.validate)(config);
+        const success = errors.length === 0;
+        const errorMessage = errors.map(({ message }) => `- ${message}`).join('\n');
+        (0, core_1.info)(`status: ${success ? 'pass' : 'fail'}`);
+        (0, core_1.info)(`errors: ${JSON.stringify(errors)}`);
+        (0, core_1.setOutput)('status', success ? 'pass' : 'fail');
+        (0, core_1.setOutput)('errors', errors);
+        (0, core_1.setOutput)('errorMessage', errorMessage);
+        if (!success) {
+            (0, core_1.setFailed)(`${errors.length} of the values failed the pattern checks.`);
+        }
+    });
+}
+exports.run = run;
+run();
+
+
+/***/ }),
+
+/***/ 997:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.validate = void 0;
+const core_1 = __nccwpck_require__(186);
 const validate = (config) => {
     const errors = [];
     for (const entry of config) {
@@ -48,7 +67,7 @@ const validate = (config) => {
         const passing = patterns.some(pattern => new RegExp(pattern).test(value));
         if (!passing) {
             const matchError = `"${value}" does not match any of the patterns.`;
-            core.info(matchError);
+            (0, core_1.warning)(matchError);
             errors.push({
                 value,
                 message: errorMessage || matchError
@@ -58,24 +77,6 @@ const validate = (config) => {
     return errors;
 };
 exports.validate = validate;
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const config = JSON.parse(core.getInput('validations'));
-            core.info(`Starting validation of ${config.length} entries...`);
-            const errors = (0, exports.validate)(config);
-            if (errors.length > 0) {
-                core.setFailed(`${errors.length} of the values failed the pattern checks.`);
-            }
-            core.setOutput('errors', errors);
-        }
-        catch (err) {
-            if (err instanceof Error)
-                core.setFailed(err.message);
-        }
-    });
-}
-exports.run = run;
 
 
 /***/ }),
