@@ -2,6 +2,7 @@ import * as process from 'process'
 import cp, {ExecFileSyncOptions} from 'child_process'
 import * as path from 'path'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function runAction(env: any) {
   const node = process.execPath
   const entry = path.join(__dirname, '..', 'lib', 'main.js')

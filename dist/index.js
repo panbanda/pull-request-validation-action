@@ -23,23 +23,21 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let config = [];
         let errors = [];
-        (0, core_1.info)('Setting up validations in config...');
+        (0, core_1.info)('Setting up validations...');
         try {
-            const configInput = (0, core_1.getInput)('validations');
-            (0, core_1.info)(configInput);
-            config = JSON.parse(configInput);
+            config = JSON.parse((0, core_1.getInput)('validations'));
         }
         catch (err) {
             if (err instanceof Error)
                 (0, core_1.setFailed)(err.message);
             return;
         }
-        (0, core_1.info)(`Starting validation of ${config.length} entries...`);
+        (0, core_1.info)(`Checking strings against ${config.length} validation(s)...`);
         errors = (0, validate_1.validate)(config);
         const success = errors.length === 0;
         const errorMessage = errors.map(({ message }) => `- ${message}`).join('\n');
         (0, core_1.info)(`status: ${success ? 'pass' : 'fail'}`);
-        (0, core_1.info)(`errors: ${JSON.stringify(errors)}`);
+        (0, core_1.info)(`errors: ${JSON.stringify(errors, null, 2)}`);
         (0, core_1.setOutput)('status', success ? 'pass' : 'fail');
         (0, core_1.setOutput)('errors', errors);
         (0, core_1.setOutput)('errorMessage', errorMessage);
