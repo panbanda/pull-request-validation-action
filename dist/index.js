@@ -23,9 +23,11 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let config = [];
         let errors = [];
-        (0, core_1.info)('Loading the validations from the config...');
+        (0, core_1.info)('Setting up validations in config...');
         try {
-            config = JSON.parse((0, core_1.getInput)('validations'));
+            const configInput = (0, core_1.getInput)('validations');
+            (0, core_1.info)(configInput);
+            config = JSON.parse(configInput);
         }
         catch (err) {
             if (err instanceof Error)

@@ -5,10 +5,14 @@ export async function run(): Promise<void> {
   let config: ValidationConfig[] = []
   let errors: ValidationError[] = []
 
-  info('Loading the validations from the config...')
+  info('Setting up validations in config...')
 
   try {
-    config = JSON.parse(getInput('validations'))
+    const configInput = getInput('validations')
+
+    info(configInput)
+
+    config = JSON.parse(configInput)
   } catch (err) {
     if (err instanceof Error) setFailed(err.message)
     return
