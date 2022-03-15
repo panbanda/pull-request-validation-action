@@ -5,20 +5,16 @@ export async function run(): Promise<void> {
   let config: ValidationConfig[] = []
   let errors: ValidationError[] = []
 
-  info('Setting up validations in config...')
+  info('Setting up validations...')
 
   try {
-    const configInput = getInput('validations')
-
-    info(configInput)
-
-    config = JSON.parse(configInput)
+    config = JSON.parse(getInput('validations'))
   } catch (err) {
     if (err instanceof Error) setFailed(err.message)
     return
   }
 
-  info(`Starting validation of ${config.length} entries...`)
+  info(`Checking strings against ${config.length} validation(s)...`)
 
   errors = validate(config)
 
@@ -26,7 +22,7 @@ export async function run(): Promise<void> {
   const errorMessage = errors.map(({message}) => `- ${message}`).join('\n')
 
   info(`status: ${success ? 'pass' : 'fail'}`)
-  info(`errors: ${JSON.stringify(errors)}`)
+  info(`errors: ${JSON.stringify(errors, null, 2)}`)
 
   setOutput('status', success ? 'pass' : 'fail')
   setOutput('errors', errors)
