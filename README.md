@@ -20,7 +20,7 @@ jobs:
           validations: |
             [
               {
-                value: "${{ pr_title_variable }}",
+                value: "${{ github.event.pull_request.title }}",
                 patterns: ["PDG-\d+"]
                 errorMessage: "Include the ticket number in your PR title"
               }
