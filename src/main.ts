@@ -5,6 +5,8 @@ export async function run(): Promise<void> {
   let config: ValidationConfig[] = []
   let errors: ValidationError[] = []
 
+  info('Loading the validations from the config...')
+
   try {
     config = JSON.parse(getInput('validations'))
   } catch (err) {
