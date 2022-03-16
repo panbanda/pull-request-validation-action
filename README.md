@@ -15,23 +15,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: 8BitJonny/gh-get-current-pr@1.4.0
+        id: PR
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.event.pull_request.head.sha }}
+          filterOutClosed: true
+
       - id: validations
         uses: panbanda/string-validation-action@main
         with:
           validations: |
             [
               {
-                "value": "${{ github.event.pull_request.title }}",
+                "value": "${{ steps.PR.outputs.pr_title }}",
                 "patterns": ["\\w+-\\d+"],
                 "errorMessage": "Include the Jira ticket in your PR title"
               },
               {
-                "value": "${{ github.event.pull_request.title }}",
+                "value": "${{ steps.PR.outputs.pr_title }}",
                 "patterns": [".{20,}"],
                 "errorMessage": "Your Pull Request title is too short.  Please include more information about your request."
               },
               {
-                "value": "${{ github.event.pull_request.title }}",
+                "value": "${{ steps.PR.outputs.pr_title }}",
                 "patterns": ["^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)"],
                 "errorMessage": "Prefix the pull request with a [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) standard prefix (feat:, fix:, etc.)."
               }
@@ -39,7 +46,7 @@ jobs:
 
       - name: Update Validation Messages
         uses: marocchino/sticky-pull-request-comment@v2
-        if: failure()
+        if: steps.validations.outputs.status === 'fail'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.issue.number }}
@@ -51,7 +58,7 @@ jobs:
 
       - name: Delete Validation Messages
         uses: marocchino/sticky-pull-request-comment@v2
-        if: success()
+        if: steps.validations.outputs.status === 'pass'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.issue.number }}
