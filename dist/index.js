@@ -41,7 +41,7 @@ function run() {
         (0, core_1.setOutput)('status', success ? 'pass' : 'fail');
         (0, core_1.setOutput)('errors', errors);
         (0, core_1.setOutput)('errorMessage', errorMessage);
-        if (!success) {
+        if (!success && (0, core_1.getInput)('fail_on_error')) {
             (0, core_1.setFailed)(`${errors.length} of the values failed the pattern checks.`);
         }
     });
