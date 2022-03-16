@@ -25,7 +25,7 @@ jobs:
           filterOutClosed: true
 
       - id: validations
-        uses: panbanda/string-validation-action@main
+        uses: panbanda/string-validation-action@v1.0.0
         with:
           validations: |
             [
