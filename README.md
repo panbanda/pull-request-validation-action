@@ -48,7 +48,7 @@ jobs:
 
       - name: Update Validation Messages
         uses: marocchino/sticky-pull-request-comment@v2
-        if: steps.validations.outputs.status === 'fail'
+        if: steps.validations.outputs.status == 'fail'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.issue.number }}
@@ -60,7 +60,7 @@ jobs:
 
       - name: Delete Validation Messages
         uses: marocchino/sticky-pull-request-comment@v2
-        if: steps.validations.outputs.status === 'pass'
+        if: steps.validations.outputs.status == 'pass'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.issue.number }}
