@@ -22,7 +22,20 @@ test('successfully runs the github action', () => {
   expect(() => runAction(process.env)).not.toThrowError()
 })
 
-test('fails when invalid', () => {
+test('does not fail when invalid and failures are not enabled', () => {
+  process.env['INPUT_VALIDATIONS'] = JSON.stringify([
+    {
+      value: 'not valid',
+      patterns: ['^(feature|hotfix):'],
+      errorMessage: 'Invalid pull request name'
+    }
+  ])
+
+  expect(() => runAction(process.env)).not.toThrowError()
+})
+
+test('fails when invalid and failures are enabled', () => {
+  process.env['INPUT_FAIL_ON_ERROR'] = 'true'
   process.env['INPUT_VALIDATIONS'] = JSON.stringify([
     {
       value: 'not valid',

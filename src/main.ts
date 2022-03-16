@@ -28,7 +28,7 @@ export async function run(): Promise<void> {
   setOutput('errors', errors)
   setOutput('errorMessage', errorMessage)
 
-  if (!success) {
+  if (!success && getInput('fail_on_error')) {
     setFailed(`${errors.length} of the values failed the pattern checks.`)
   }
 }

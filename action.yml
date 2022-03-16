@@ -2,6 +2,8 @@ name: String Validation
 description: Validate multiple action outputs, environment variables, and strings in a single step
 author: Jonathan Reyes
 inputs:
+  fail_on_error:
+    description: Fail the step if an error is detected
   validations:
     required: true
     description: An array of settings
