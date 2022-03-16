@@ -24,7 +24,7 @@ jobs:
           validations: |
             [
               {
-                value: "this should work",
-                patterns: ["this should work"]
+                "value": "this should work",
+                "patterns": ["this should work"]
               }
             ]
